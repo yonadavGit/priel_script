@@ -16,7 +16,7 @@ def moodle_log_in(id, password):
     # return s
     with requests.Session() as s:
         p = s.post('https://lemida.biu.ac.il/blocks/login_ldap/login.php', data=payload)
-        p1 = s.post('https://lemida.biu.ac.il/course/view.php?id=67196', data=payload)
+        p1 = s.post('https://lemida.biu.ac.il/course/view.php?id=67199', data=payload)
 
         # print the html returned or something more intelligent to see if it's a successful login page.
         # print (p.text)
@@ -34,12 +34,17 @@ def moodle_log_in(id, password):
             urls_of_files.add(file_url)
             print(file_url)
 
-        for url in urls_of_files:
-            p2 = s.post('https://lemida.biu.ac.il/course/view.php?id=67196', data=payload)
-            start_index = p2.text.find('https://lemida.biu.ac.il/pluginfile.php')
-            end_index = find_index_of_substring(p2.text, 'pdf', start_index) + 3
-            real_url = p2.text[start_index:end_index]
-            print(real_url)
+        # i = 1
+        # for url in urls_of_files:
+        #     p2 = s.post(url, data=payload)
+        #     # start_index = p2.text.find('https://lemida.biu.ac.il/pluginfile.php')
+        #     # end_index = find_index_of_substring(p2.text, 'pdf', start_index) + 3
+        #     # real_url = p2.text[start_index:end_index]
+        #     # print(real_url)
+        #     name = 'num' + str(i) + '.pdf'
+        #     with open(name, 'wb') as fd:
+        #         fd.write(p2.text.encode())
+        #     i +=1
 
         # i = 1
         # for url in urls_of_files:
@@ -57,5 +62,5 @@ def find_index_of_substring(text, pattern, start_from):
     index = start_from + index
     return index
 
-if __name__ == "__main__":
+#if __name__ == "__main__":
     session = moodle_log_in('207424490', 'Learning10')
